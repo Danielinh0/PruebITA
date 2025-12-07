@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Equipo;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -22,6 +23,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Forzar HTTPS en producción
+        if (config('app.env') === 'production') {
+            URL::forceScheme('https');
+        }
+
         Gate::define('lider-equipo', function (User $user, Equipo $equipo) {
             return $equipo->miembros()->where('id_estudiante', $user->id_usuario)->where('es_lider', true)->exists();
         });
