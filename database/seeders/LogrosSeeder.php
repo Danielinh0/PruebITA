@@ -3,12 +3,13 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use App\Models\Logro;
 
 class LogrosSeeder extends Seeder
 {
     /**
      * Run the database seeds.
+     * Usa firstOrCreate para evitar duplicados en deploys automatizados.
      */
     public function run(): void
     {
@@ -163,10 +164,17 @@ class LogrosSeeder extends Seeder
         ];
 
         foreach ($logros as $logro) {
-            DB::table('logros')->insert(array_merge($logro, [
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]));
+            // Usar firstOrCreate con 'condicion' como identificador único
+            Logro::firstOrCreate(
+                ['condicion' => $logro['condicion']],
+                [
+                    'nombre' => $logro['nombre'],
+                    'descripcion' => $logro['descripcion'],
+                    'icono' => $logro['icono'],
+                    'tipo' => $logro['tipo'],
+                    'puntos_xp' => $logro['puntos_xp'],
+                ]
+            );
         }
     }
 }

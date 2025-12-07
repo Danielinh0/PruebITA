@@ -10,4 +10,8 @@ class CatCarrera extends Model
     protected $table = 'cat_carreras';
     // ? clave primaria
     protected $primaryKey = 'id_carrera';
+    // ? no usa timestamps
+    public $timestamps = false;
+    // ? campos asignables
+    protected $fillable = ['nombre'];
 }
