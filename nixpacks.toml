@@ -1,5 +1,4 @@
 # Nixpacks configuration for Laravel with Vite
-# Railway auto-detects PHP, this just adds Node.js for Vite build
 
 [phases.setup]
-nixPkgs = ["nodejs_20"]
+nixPkgs = ["nodejs_20", "php83", "php83Packages.composer"]
