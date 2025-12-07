@@ -23,9 +23,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Forzar HTTPS en producción
-        if (config('app.env') === 'production') {
+        // Forzar HTTPS en producción (Railway usa proxy)
+        if (config('app.env') === 'production' || $this->app->environment('production')) {
             URL::forceScheme('https');
+            $this->app['request']->server->set('HTTPS', 'on');
         }
 
         Gate::define('lider-equipo', function (User $user, Equipo $equipo) {
