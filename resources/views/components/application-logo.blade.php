@@ -1,0 +1,1 @@
+<img src="{{ asset('images/logito.png') }}" class="h-14 w-auto" alt="Logo">
